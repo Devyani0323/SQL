@@ -1,0 +1,53 @@
+show databases;
+use sakila;
+
+show tables;
+
+describe actor;
+
+select * from actor;
+
+select actor_id, first_name,ACTOR_ID FROM ACTOR;
+
+select actor_id, first_name,ACTOR_ID*100 FROM ACTOR;
+
+select * from actor where actor_id=2;
+  
+  select *from actor where actor_id<>2;
+  
+  select *from actor where actor_id between 1 and 5;
+  
+  select *from actor where actor_id in (2,5,500);
+  
+  select * from actor where first_name in ('nick' , 'ed');
+  
+  select *from actor where first_name like 'E%';
+  
+  select *from actor where first_name like '%E';
+  
+    select *from actor where first_name like '%y';
+    
+select *from actor where first_name like 's%y';
+
+
+select *from actor where first_name like '%sa%';
+select *from actor where first_name like 'e%';
+
+
+select *from actor where first_name like 'e_';
+
+select *from actor where first_name like '_a%';
+
+select *from actor where first_name like '____';
+select *from actor where first_name like '%i__';
+
+select *from actor where first_name like '_a%';
+select *from actor where first_name like '_%e%_';
+select *from actor where first_name like '%r__';
+select *from actor where first_name like '_%ee%_';
+select *from actor where first_name like '_h%z_';
+
+
+
+
+
