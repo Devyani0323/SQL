@@ -1,0 +1,72 @@
+use sakila;
+select * from payment;
+select curdate(), str_to_date('19 2025 02','%d %Y %m')
+from dual;
+select sum(amount) from payment;
+select count(amount)from payment;
+select avg(amount), sum(amount)/count(amount) from payment;
+
+select distinct(amount) from payment;
+
+use sakila;
+select * from payment;
+select * from payment where max(amount);
+-- correlated (joins)
+-- joins
+-- sql
+use sakila;
+select * from address;
+-- create database
+
+create database test1;
+use test1;
+
+create table product(pid int,name varchar(20),price int);
+insert into product values(10,'tv',100),(20,'apple',200),
+(30,'mobile',300),(40,'shoe',1500);
+
+select * from product;
+
+create table orders(oid varchar(20), city varchar(20),
+product_id int);
+insert into orders values('A1012','Jaipur',10),
+('B21012','Goa',20), ('C3012','Japan',30),('D4012','uK',60);
+select * from orders;
+
+select pid, name, price from product
+ join orders where pid=product_id;
+ 
+ select p.pid,p.name,p.price,o.city from product 
+ as p join orders as o where p.pid=o.product_id;
+ 
+  select p.pid,p.name,p.price,o.city from product 
+ as p inner join orders as o on p.pid=o.product_id;
+ 
+  select p.pid,p.name,p.price,o.city from product 
+ as p left join orders as o on p.pid=o.product_id;
+ 
+  select p.pid,p.name,p.price,o.city from product 
+ as p right join orders as o on p.pid=o.product_id;
+ 
+ -- non-equi join
+ 
+ select pid, city from product,orders
+ where pid=product_id;
+ 
+ select * from orders;
+ 
+ insert into orders
+ select pid,city from product,orders where pid=product_id;
+ 
+ insert into orders values('E2132','JK',10),('F213','MH',30);
+ -- SELECT P.PID,P.NAME, P.PRICE,O.OID
+ 
+ -- NATURAL JOIN 
+ SELECT P.PID,P.NAME,P.PRICE,O.CITY FROM 
+ PRODUCT AS P NATURAL JOIN ORDERS AS O;
+ 
+ DESC ORDERS;
+ 
+ SELECT * FROM ORDERS;
+ 
+ 
