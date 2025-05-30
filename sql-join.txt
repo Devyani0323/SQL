@@ -1,0 +1,139 @@
+
+
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    email VARCHAR(100),
+    order_date DATE,
+    total_amount DECIMAL(10, 2)
+);
+
+INSERT INTO orders (order_id, customer_name, email, order_date, total_amount) VALUES
+(101, 'John Doe', 'john.doe@gmail.com', '2024-12-10', 250.00),
+(102, 'Alice Smith', 'alice@yahoo.com', '2024-12-15', 300.00),
+(103, 'John Doe', 'john.doe@gmail.com', '2025-01-20', 450.00),
+(104, 'Bob Lee', 'bob.lee@hotmail.com', '2025-02-01', 150.00),
+(105, 'Alice Smith', 'alice@yahoo.com', '2025-02-10', 200.00),
+(106, 'Jane Miller', 'jane.miller@gmail.com', '2025-03-05', 400.00),
+(107, 'Sam Wilson', 'sam.wilson@gmail.com', '2025-01-15', 180.00),
+(108, 'Emily Davis', 'emily_davis@yahoo.com', '2025-02-18', 220.00),
+(109, 'Michael Chen', 'michael.chen@outlook.com', '2025-03-22', 340.00),
+(110, 'Rachel Green', 'rachel.green@gmail.com', '2025-03-28', 190.00),
+(111, 'John Doe', 'john.doe@gmail.com', '2025-04-05', 310.00),
+(112, 'Alice Smith', 'alice@yahoo.com', '2025-04-12', 270.00),
+(113, 'Jane Miller', 'jane.miller@gmail.com', '2025-05-03', 380.00),
+(114, 'Sam Wilson', 'sam.wilson@gmail.com', '2025-06-14', 500.00),
+(115, 'Bob Lee', 'bob.lee@hotmail.com', '2025-07-01', 420.00),
+(116, 'Michael Chen', 'michael.chen@outlook.com', '2025-08-19', 610.00),
+(117, 'Emily Davis', 'emily_davis@yahoo.com', '2025-09-10', 275.00),
+(118, 'Rachel Green', 'rachel.green@gmail.com', '2025-10-05', 195.00),
+(119, 'John Doe', 'john.doe@gmail.com', '2025-11-21', 330.00),
+(120, 'Jane Miller', 'jane.miller@gmail.com', '2025-12-25', 490.00);
+
+select * from orders;
+select customer_name, count(order_id) from orders 
+group by customer_name ;
+select   customer_name ,substr(email,1,
+       instr(email,"@")-1) as username from orders;
+select month(order_date), count(order_id) from orders 
+group by month(order_date);
+select email,locate('@',email,5)from orders;
+select   customer_name ,substr(email,1,
+       instr(email,"@")-1) as username from orders;
+
+select customer_name,year(order_date),count(order_id),
+sum(total_amount) from orders group by 
+customer_name,year(order_date);
+
+use sakila;
+select * from actor;
+select * from film_actor;
+select film_id, actor_id from film_actor;
+
+create database regex ;
+use regex;
+create table product(pid int, pname varchar(20), price int);
+insert into product values(10,"Iphone",20000), (11,"TV",10000),
+(12,"LED",3000), (13,"Jeans",800);
+
+select * from product;
+
+create table orders1( oid int, city varchar(20), pid int);
+insert into orders1 values(124111,"Jaipur",10), (124112,"GOA",11),
+(145631,"Manali",12), (59869011,"Raipur",16);
+select * from orders1;
+
+
+select o.oid , o.city , o.pid, p.pname,p.pid from orders1 as o join product as p ;
+select o.oid , o.city , o.pid, p.pname,p.pid from orders1 as o join product as p where o.pid=p.pid;
+
+-- new syntax  this is only the new syntax and output are same  purane me ise eqiu join v kahte the 
+select o.oid , o.city , o.pid, p.pname,p.pid from orders1 as o inner join product as p where o.pid=p.pid;
+
+
+select o.oid , o.city , o.pid, p.pname,p.pid from product as p left join orders1 as o on o.pid=p.pid;
+
+use sakila;
+select * from actor;
+select * from film_actor;
+select * from film;
+
+select fa.actor_id,fa.film_id, f.film_id,f.title from film_actor as fa join film as f on fa.film_id = f.film_id;
+
+
+select fa.actor_id ,f.length,f.title from film_actor as fa join film as f where f.length>100;
+
+select fa.actor_id, count(f.title) from  film_actor as fa join film as f group by fa.actor_id;
+
+use sakila;
+create table employee1(eid int,ename varchar(20),manager_id int);
+insert into employee1 values(10,"devyani",null),(11,"aman",12),(12,"adi",10),(13,"sakshi",11);
+select * from employee1;
+select emp.eid,emp.ename,emp.manager_id , manager.eid,manager.ename 
+from employee1 as emp join employee1 as manager where emp.manager_id = manager.eid;
+
+-- natural join 
+-- its a worst join 
+
+use sakila;
+select * from payment;
+select customer_id, count(payment_id) from payment group by customer_id having count(payment_id)>30;
+
+select  count(payment_id),amount from payment group by amount;
+select * from actor;
+select * from film_actor;
+select a.actor_id, a.first_name, fa.film_id from actor as a  join film_actor as fa where a.actor_id=fa.actor_id;
+
+select f.film_id,a.count(actor_id) from film_actor as f join actor as a group by  f.film_id;
+
+create table test4(id decimal(5,2));
+use sakila;
+select * from payment;
+select payment_id,amount,staff_id,rental_id from payment
+ where staff_id= (select staff_id from payment where rental_id=1422);
+ use sakila;
+ 
+ select * from payment where amount=(select amount from payment where payment_id = 6);
+ 
+ SELECT ACTOR_ID FROM ACTOR WHERE FIRST_NAME="ED" AND LAST_NAME = "CHASE";
+ select  * from actor where actor_id > (select actor_id from actor where first_name="ED" and last_name = "CHASE");
+ 
+ SELECT * FROM PAYMENT;
+ -- GET ALL THE PAYMENTS DETAIL FOR THOSE PAYMENT WHERE THE MONTH SHOULD = THE PAYMENT MONTH OF PAYMENT ID 5 
+SELECT * FROM PAYMENT WHERE MONTH(PAYMENT_DATE)= (SELECT MONTH(PAYMENT_DATE) FROM PAYMENT WHERE PAYMENT_ID=5); 
+
+-- GET THE CUSTOMER ID THE PAYMENT_ID AND THE AMOUNT FOR THE PAYMENT
+-- WHERE THE RENTAL_ID < THE RENTEL ID OF PAYMENT ID 7 AND AMOUNT < THAN 5
+SELECT RENTAL_ID FROM PAYMENT WHERE PAYMENT_ID=7;
+
+SELECT CUSTOMER_ID, PAYMENT_ID ,AMOUNT FROM PAYMENT WHERE RENTAL_ID<(SELECT RENTAL_ID FROM PAYMENT WHERE PAYMENT_ID=7 AND AMOUNT<5);
+
+-- GET THE AMOUNT AND THE TOTAL NO. OF PAYMENTS DONE WHERE THE TOTAL NO. OF PAYMENTS IS GREATER THAN THE TOTAL NO. OF PAYMENTS DOME BY AMOUNT 
+-- 5.99
+SELECT * FROM PAYMENT;
+SELECT  PAYMENT_ID, AMOUNT FROM PAYMENT  WHERE AMOUNT=5.99;
+-- nested query => (2.99 , 5.99)
+ select * from payment where amount in(select amount from payment where payment_id in (3,1));
+ use employees;
+ show tables; 
