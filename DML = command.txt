@@ -1,0 +1,46 @@
+create table xyz(id int,fname varchar(20));
+insert into xyz(id) values(11); 
+insert into xyz(fname) values('devyani');
+select * from xyz;
+
+update xyz set fname="regex" where id=11;   
+update xyz set fname="devu" where id=11;  
+delete from xyz where id =11;
+
+create table xyz4(dob datetime default now());
+insert into xyz4 values('2024-10-09');
+insert into xyz4() values();
+select * from xyz4;
+drop table addmission; 
+CREATE TABLE addmission (
+    addmission_id INT,
+    collage_name VARCHAR(20),
+    student_id INT,
+    FOREIGN KEY (student_id) REFERENCES student1(student_id)
+);
+insert into addmission values(101,'regex',1),(102,'mahila_clg',2),(103,'devops',3);
+
+drop table student1;
+create table student1(student_id int primary key ,student_name varchar(20));
+insert into student1 values (1,'devyani'),(2,'aman'),(3,'rohan'),(4,'mohan');
+select * from student1;
+
+drop table students;
+create table students(student_id int primary key,name varchar(20),age int,grade int,city varchar(20));
+insert into students values(1,'Alice',14,9,'new york');
+
+create table marks(student_id int,subject varchar(20),marks int, foreign key(student_id) references students(student_id));
+
+use sakila;
+create table test99 as select actor_id,first_name from actor;
+select * from test99;
+
+-- delete those actor_id who's actor id  is same as that of first name of penelope 
+delete from actor where actor_id in (select actor_id from actor where first_name='PENELOPE');
+
+
+-- update the amount done by customer id =1 as with the same amount done by customer for payment id 2;
+drop table test98;
+ create table test98 as select customer_id,amount,payment_id from payment;
+ select * from test98;
+update test98 set amount= (select amount from payment where payment_id = 2)  where customer_id = 1;
