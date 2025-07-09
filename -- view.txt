@@ -1,0 +1,22 @@
+-- view 
+-- make easy complex query
+-- database (no data is store)
+-- virtual data => query of the base table
+use regex;
+drop table t_actor;
+create  table t_actor as 
+select * from sakila.actor limit 20;
+
+select * from t_actor;
+create or replace view actor_view as select *
+ from t_actor; 
+ select * from actor_view;
+ 
+ delete from actor_view;
+ select * from t_actor;
+create or replace view actor_view1 as select first_name,
+count(actor_id) 
+ from t_actor 
+ group by actor_id;
+--  delete from actor_view1;(this will give an error because it is a 
+-- non-updatable view)
