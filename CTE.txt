@@ -1,0 +1,41 @@
+-- recursive cte
+
+
+WITH RECURSIVE numbers AS (
+  SELECT 1 AS num            -- Anchor
+  UNION ALL
+  SELECT num + 1 FROM numbers WHERE num < 5  -- Recursive
+)
+SELECT * FROM numbers;
+
+CREATE TABLE employees (
+emp_id serial PRIMARY KEY,
+emp_name VARCHAR(20) NOT NULL,
+manager_id INT );
+
+INSERT INTO employees (
+emp_id, emp_name, manager_id)
+VALUES
+(1, 'Madhav', NULL),
+(2, 'Sam', 1),
+(3, 'Tom', 2),
+(4, 'Arjun', 6),
+(5, 'Shiva', 4),
+(6, 'Keshav', 1),
+(7, 'Damodar', 5);
+
+
+WITH RECURSIVE emp_tree AS (
+  -- Top-level manager(s)
+  SELECT emp_id, emp_name, manager_id FROM employees
+  WHERE manager_id IS NULL  
+
+  UNION ALL
+
+  -- Unka direct team
+  SELECT e.emp_id, e.emp_name, e.manager_id
+  FROM employees e
+  JOIN emp_tree et ON e.manager_id = et.emp_id
+)
+SELECT * FROM emp_tree;
+
